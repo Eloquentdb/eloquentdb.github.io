@@ -20,12 +20,12 @@
                 extend: {      
                     colors: {
                         gray: {          
-                            950: '#oaoaoa',
-                            900: '#lziziz',
-                            aoa: '#lelele',
-                            75o: '#zaza za',
+                            950: '#0a0a0a',
+                            900: '#121212',
+                            800: '#1e1e1e',
+                            750: '#2a2a2a',
                             700: '#373737',
-                            60o: '#szs zs z',
+                            600: '#525252',
                             500: '#717171',
                             400: '#a3a3a3',
                             300: '#d4d4d4',
@@ -33,25 +33,46 @@
                         orange: {
                             500: '#FF7A00',
                             600: '#E06B00',
-                        }
+                        }       
                     },
-                    fontFamily: {
+                    fontFamily: {           
                         sans: ['Inter', 'system-ui', 'sans-serif'],
                     },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-10px)' },
+                        }
+                    }
                 }
             }
-        }
+        }       
     </script>
     
-    <style type="text/tailwindcss">
+    <style type="text/tailwindcss">      
         @layer utilities {
             .content-auto {
                 content-visibility: auto;
             }
-        }
+            .text-gradient {
+                background-clip: text;
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+            }
+            .bg-grid {
+                background-size: 40px 40px;
+                background-image: 
+                    linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+                    linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+            }
+        }       
     </style>
-</head>
-<body class="bg-gray-900 text-white min-h-screen">
+</head>       
+<body class="bg-gray-900 text-white min-h-screen scroll-smooth">
     <div id="root"></div>
 
     <script type="text/babel">
@@ -62,17 +83,23 @@
         
         function Header() {
             return (
-                <header className="bg-gray-900 border-b border-gray-aoa">      
-                    <div className="container mx-auto px-a py-a flex justify-between items-center">
+                <header className="bg-gray-900/80 backdrop-blur-md border-b border-gray-800 sticky top-0 z-50 transition-all duration-300">      
+                    <div className="container mx-auto px-4 py-4 flex justify-between items-center">
                         <div className="flex items-center">
-                            <div className="text-orange-500 font-bold text-xl">EloquentDB</div>
+                            <a href="index.html" className="text-orange-500 font-bold text-xl hover:text-orange-400 transition-colors flex items-center gap-2 group">
+                                EloquentDB
+                                <span className="h-1 w-0 bg-orange-500 group-hover:w-8 transition-all duration-300"></span>
+                            </a>
                         </div>
                         
-                        <nav className="hidden md:flex space-x-a">      
-                            <a href="#" className="text-gray-3oo hover:text-white transition-colors">Download</a>
-                            <a href="#" className="text-orange-5oo hover:text-white transition-colors font-medium">Company</a>
-                            <a href="index.html">EloquentDB</a>
+                        <nav className="hidden md:flex space-x-8">      
+                            <a href="#" className="text-gray-300 hover:text-white transition-colors relative after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 after:bg-orange-500 hover:after:w-full after:transition-all duration-300">Download</a>
+                            <a href="#" className="text-orange-500 hover:text-orange-400 transition-colors font-medium relative after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-full after:bg-orange-500 after:transition-all duration-300">Company</a>
                         </nav>
+                        
+                        <button className="md:hidden text-gray-300 hover:text-white">
+                            <i className="fa-solid fa-bars text-xl"></i>
+                        </button>
                     </div>      
                 </header>
             );      
@@ -80,45 +107,64 @@
         
         function Hero() {
             return (      
-                <section className="bg-gradient-to-br from-blue-900 via-purple-9oo to-indigo-900 py-lb relative overflow-hidden">
-                    <div className="absolute inset-o opacity-z0">      
-                        <div className="absolute top-o left-o w-l4 h-l4 bg-blue-5oo rounded-full mix-blend-multiply filter blur-xl animate-pulse"></div>
-                        <div className="absolute bottom-o right-o w-l4 h-l4 bg-purple-5oo rounded-full mix-blend-multiply filter blur-xl animate-pulse delay-1000"></div>
-                        <div className="absolute top-l/2 left-l/2 w-l4 h-l4 bg-indigo-5oo rounded-full mix-blend-multiply filter blur-xl animate-pulse delay-s00"></div>
+                <section className="bg-gradient-to-br from-blue-900 via-purple-900 to-indigo-900 py-20 relative overflow-hidden bg-grid">
+                    <div className="absolute inset-0 opacity-20">      
+                        <div className="absolute top-0 left-0 w-64 h-64 bg-blue-500 rounded-full mix-blend-multiply filter blur-3xl animate-pulse-slow"></div>
+                        <div className="absolute bottom-0 right-0 w-64 h-64 bg-purple-500 rounded-full mix-blend-multiply filter blur-3xl animate-pulse-slow delay-1000"></div>
+                        <div className="absolute top-1/2 left-1/2 w-64 h-64 bg-indigo-500 rounded-full mix-blend-multiply filter blur-3xl animate-pulse-slow delay-700"></div>
                     </div>
-                    <div className="container mx-auto px-a relative z-10">
+                    <div className="container mx-auto px-4 relative z-10">
                         <div className="max-w-4xl mx-auto text-center">
-                            <h1 className="text-4xl md:text-sxl font-bold text-white mb-l">Our Vision</h1>
-                            <p className="text-xl text-gray-3oo leading-relaxed">
+                            <h1 className="text-4xl md:text-5xl font-bold text-white mb-6 leading-tight">
+                                Rethinking Databases for the <span className="bg-gradient-to-r from-orange-400 to-pink-500 text-gradient">AI Era</span>
+                            </h1>
+                            <p className="text-xl text-gray-300 leading-relaxed mb-10 max-w-2xl mx-auto">
                                 We are a team with deep expertise and shared passion in databases, distributed systems, and AI.
                                 Drawing on decades of experience building and scaling mission-critical infrastructure,
                                 we came together with a shared vision: to rethink what databases should be in the AI era.
                             </p>
+                            <div className="flex flex-col sm:flex-row justify-center gap-4">
+                                <a href="#" className="bg-orange-500 hover:bg-orange-600 text-white font-medium py-3 px-8 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-orange-500/20">
+                                    Learn More
+                                </a>
+                                <a href="#" className="bg-gray-800 hover:bg-gray-750 text-white font-medium py-3 px-8 rounded-xl transition-all duration-300 transform hover:scale-105 border border-gray-700">
+                                    Contact Us
+                                </a>
+                            </div>
                         </div>
                     </div>
+                    
+                    <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-gray-900 to-transparent"></div>
                 </section>
             );
         }
         
         function VisionSection() {
             return (
-                <section className="bg-gray-900 py-lb">
-                    <div className="container mx-auto px-a">
-                        <div className="max-w-sxl mx-auto grid md:grid-cols-2 gap-l2 items-center">
-                            <div className="relative">
+                <section className="bg-gray-900 py-20">
+                    <div className="container mx-auto px-4">
+                        <div className="max-w-5xl mx-auto grid md:grid-cols-2 gap-12 items-center">
+                            <div className="relative group">
+                                <div className="absolute -inset-1 bg-gradient-to-r from-orange-500 to-pink-500 rounded-xl blur opacity-0 group-hover:opacity-100 transition duration-500"></div>
                                 <img 
                                     src="https://space.coze.cn/api/coze_space/gen_image?image_size=landscape_4_3&prompt=database%20vision%20concept%20illustration%20dark%20theme&sign=0f01313ca67bc00fc77383667ee4c825" 
                                     alt="Vision" 
-                                    className="rounded-xl shadow-2xl"
+                                    className="relative rounded-xl shadow-2xl w-full h-auto transform group-hover:scale-[1.02] transition-transform duration-500"
                                 />
-                                <div className="absolute inset-o bg-gradient-to-t from-black/s0 to-transparent rounded-xl"></div>
+                                <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent rounded-xl"></div>
                             </div>
-                            <div>
-                                <h2 className="text-3xl font-bold text-orange-5oo mb-l">Our Vision</h2>
-                                <p className="text-gray-4oo leading-relaxed mb-l">
+                            <div className="space-y-6">
+                                <div className="inline-block">
+                                    <span className="text-orange-500 font-semibold">OUR VISION</span>
+                                    <div className="w-16 h-1 bg-orange-500 mt-1"></div>
+                                </div>
+                                <h2 className="text-3xl font-bold text-white mb-6">Redefining What Databases Should Be</h2>
+                                <p className="text-gray-400 leading-relaxed mb-6">
                                     We are a team with deep expertise and shared passion in databases, distributed systems, and AI. 
                                     Drawing on decades of experience building and scaling mission-critical infrastructure, 
-                                    we came together with a shared vision: to rethink what databases should be in the AI era. 
+                                    we came together with a shared vision: to rethink what databases should be in the AI era.
+                                </p>
+                                <p className="text-gray-400 leading-relaxed">
                                     We believe the future demands more than incremental change. It calls for a radical simplification 
                                     and reinvention of the data stack—one that empowers developers, accelerates innovation, 
                                     and unleashes the full potential of intelligent applications.
@@ -132,27 +178,42 @@
         
         function TechnologySection() {
             return (
-                <section className="bg-gray-900 py-lb">
-                    <div className="container mx-auto px-a">
-                        <div className="max-w-sxl mx-auto grid md:grid-cols-2 gap-l2 items-center">
-                            <div>
-                                <h2 className="text-3xl font-bold text-orange-5oo mb-l">Our Technology</h2>
-                                <p className="text-gray-4oo leading-relaxed mb-l">
+                <section className="bg-gray-900 py-20 border-t border-gray-800">
+                    <div className="container mx-auto px-4">
+                        <div className="max-w-5xl mx-auto grid md:grid-cols-2 gap-12 items-center">                            
+                            <div className="space-y-6 order-2 md:order-1">
+                                <div className="inline-block">
+                                    <span className="text-orange-500 font-semibold">OUR TECHNOLOGY</span>
+                                    <div className="w-16 h-1 bg-orange-500 mt-1"></div>
+                                </div>
+                                <h2 className="text-3xl font-bold text-white mb-6">Data Substrate Architecture</h2>
+                                <p className="text-gray-400 leading-relaxed mb-6">
                                     At the heart of EloquentDB is Data Substrate—a modular database architecture that redefines 
                                     how databases are built. By abstracting the core components of database functionality, 
                                     Data Substrate enables us to create high-performance, scalable and fully transactional systems 
-                                    without reinventing the wheel. This composable foundation allows us to support multiple APIs 
+                                    without reinventing the wheel.
+                                </p>
+                                <p className="text-gray-400 leading-relaxed">
+                                    This composable foundation allows us to support multiple APIs 
                                     and data modalities (such as MySQL, Redis, and MongoDB) while delivering consistent performance 
                                     and reliability across all workloads.
                                 </p>
+                                
+                                <div className="mt-8 flex flex-wrap gap-3">
+                                    <span className="bg-gray-800 text-gray-300 px-4 py-2 rounded-full text-sm">Modular Architecture</span>
+                                    <span className="bg-gray-800 text-gray-300 px-4 py-2 rounded-full text-sm">High Performance</span>
+                                    <span className="bg-gray-800 text-gray-300 px-4 py-2 rounded-full text-sm">Multi-API Support</span>
+                                </div>
                             </div>
-                            <div className="relative">
+                            
+                            <div className="relative group order-1 md:order-2">
+                                <div className="absolute -inset-1 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-xl blur opacity-0 group-hover:opacity-100 transition duration-500"></div>
                                 <img 
                                     src="https://space.coze.cn/api/coze_space/gen_image?image_size=landscape_4_3&prompt=database%20technology%20architecture%20dark%20theme&sign=dbea573125c44c027266753c851acf96" 
                                     alt="Technology" 
-                                    className="rounded-xl shadow-2xl"
+                                    className="relative rounded-xl shadow-2xl w-full h-auto transform group-hover:scale-[1.02] transition-transform duration-500"
                                 />
-                                <div className="absolute inset-o bg-gradient-to-t from-black/s0 to-transparent rounded-xl"></div>
+                                <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent rounded-xl"></div>
                             </div>
                         </div>
                     </div>
@@ -162,25 +223,34 @@
         
         function MissionSection() {
             return (
-                <section className="bg-gray-900 py-lb">
-                    <div className="container mx-auto px-a">
-                        <div className="max-w-sxl mx-auto grid md:grid-cols-2 gap-l2 items-center">
-                            <div className="relative">
+                <section className="bg-gray-900 py-20 border-t border-gray-800">
+                    <div className="container mx-auto px-4">
+                        <div className="max-w-5xl mx-auto grid md:grid-cols-2 gap-12 items-center">
+                            <div className="relative group">
+                                <div className="absolute -inset-1 bg-gradient-to-r from-purple-500 to-pink-500 rounded-xl blur opacity-0 group-hover:opacity-100 transition duration-500"></div>
                                 <img 
                                     src="https://space.coze.cn/api/coze_space/gen_image?image_size=landscape_4_3&prompt=database%20mission%20ai%20concept%20dark%20theme&sign=35ae9a3acd52febdc3c40ed1f8c3649f" 
                                     alt="Mission" 
-                                    className="rounded-xl shadow-2xl"
+                                    className="relative rounded-xl shadow-2xl w-full h-auto transform group-hover:scale-[1.02] transition-transform duration-500"
                                 />
-                                <div className="absolute inset-o bg-gradient-to-t from-black/s0 to-transparent rounded-xl"></div>
+                                <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent rounded-xl"></div>
                             </div>
-                            <div>
-                                <h2 className="text-3xl font-bold text-orange-5oo mb-l">Our Mission</h2>
-                                <p className="text-gray-4oo leading-relaxed mb-l">
+                            <div className="space-y-6">
+                                <div className="inline-block">
+                                    <span className="text-orange-500 font-semibold">OUR MISSION</span>
+                                    <div className="w-16 h-1 bg-orange-500 mt-1"></div>
+                                </div>
+                                <h2 className="text-3xl font-bold text-white mb-6">Building the Foundation for the AI Era</h2>
+                                <p className="text-gray-400 leading-relaxed mb-6">
                                     At EloquentDB, we aim to be the foundational data layer that drives the AI era forward. 
-                                    We believe the future of data lies in simplicity, performance, and adaptability. 
+                                    We believe the future of data lies in simplicity, performance, and adaptability.
+                                </p>
+                                <p className="text-gray-400 leading-relaxed mb-6">
                                     Our goal is to modernize database architecture by unifying fragmented systems into a single, 
                                     seamless platform. We strive to offer a range of data management products that deliver 
-                                    unmatched scalability, full ACID compliance, up to l0x performance gains and up to 90% cost savings 
+                                    unmatched scalability, full ACID compliance, up to 10x performance gains and up to 90% cost savings.
+                                </p>
+                                <p className="text-gray-400 leading-relaxed">
                                     — empowering developers to build the next generation of AI-native applications with ease and confidence.
                                 </p>
                             </div>
@@ -192,49 +262,25 @@
         
         function JoinUsSection() {
             return (
-                <section className="bg-gray-900 py-lb">
-                    <div className="container mx-auto px-a">
+                <section className="bg-gradient-to-br from-gray-900 to-gray-950 py-20 relative overflow-hidden">
+                    <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-96 h-96 bg-orange-500 rounded-full mix-blend-multiply filter blur-3xl opacity-10"></div>
+                    
+                    <div className="container mx-auto px-4 relative z-10">
                         <div className="max-w-3xl mx-auto text-center">
-                            <h2 className="text-3xl font-bold text-orange-5oo mb-l">Join Us</h2>
-                            <p className="text-gray-4oo leading-relaxed mb-l">
-                                We are hiring. If you want to work with a world-class team and help define the future of database systems, 
-                                <a href="#" className="text-orange-5oo hover:text-orange-4oo font-medium" onClick={(e) => {
-                                    e.preventDefault();
-                                    alert('Contact form coming soon');
-                                }}>Contact Us</a>.
-                            </p>
-                        </div>
-                    </div>
-                </section>
-            );
-        }
-        
-        function OfficeLocations() {
-            return (
-                <section className="bg-gray-900 py-lb">
-                    <div className="container mx-auto px-a">
-                        <div className="max-w-4xl mx-auto">
-                            <h2 className="text-3xl font-bold text-orange-5oo mb-l2 text-center">Office Locations</h2>
-                            <div className="grid md:grid-cols-2 gap-a">
-                                <div className="bg-gray-aoa p-l rounded-xl shadow-lg">
-                                    <h3 className="text-xl font-bold text-orange-5oo mb-a">North America</h3>
-                                    <p className="text-gray-4oo">
-                                        EloquentDB Inc.<br/>
-                                        l02l8 Parkwood Drive s<br/>
-                                        Cupertino, CA 9430l<br/>
-                                        USA
-                                    </p>
-                                </div>
-                                <div className="bg-gray-aoa p-l rounded-xl shadow-lg">
-                                    <h3 className="text-xl font-bold text-orange-5oo mb-a">Asia Pacific</h3>
-                                    <p className="text-gray-4oo">
-                                        EloquentDB PTE.Ltd.<br/>
-                                        llo Robinson Road<br/>
-                                        #l4-o4 SBF Center<br/>
-                                        Singapore 0l89l4
-                                    </p>
-                                </div>
+                            <div className="inline-block mb-6">
+                                <span className="text-orange-500 font-semibold">JOIN OUR TEAM</span>
+                                <div className="w-16 h-1 bg-orange-500 mt-1 mx-auto"></div>
                             </div>
+                            
+                            <h2 className="text-3xl font-bold text-white mb-6">Shape the Future of Database Systems</h2>
+                            <p className="text-gray-400 leading-relaxed mb-8 text-lg">
+                                We are hiring talented individuals who want to work with a world-class team and help define the future of database systems.
+                            </p>
+                            
+                            <a href="#" className="inline-block bg-orange-500 hover:bg-orange-600 text-white font-medium py-3 px-8 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-orange-500/20 flex items-center gap-2 group">
+                                Contact Us
+                                <i className="fa-solid fa-arrow-right group-hover:translate-x-1 transition-transform"></i>                                
+                            </a>
                         </div>
                     </div>
                 </section>
@@ -243,14 +289,65 @@
         
         function Footer() {
             return (
-                <footer className="bg-gray-950 py-l">
-                    <div className="container mx-auto px-a">
-                        <div className="pt-l text-center">
-                            <div className="text-orange-5oo mb-2">EloquentDB</div>
-                            <p className="text-gray-4oo text-sm">
-                                monograph data ltd
-                            </p> 
-                        </div>     
+                <footer className="bg-gray-950 py-12 border-t border-gray-900">
+                    <div className="container mx-auto px-4">
+                        <div className="max-w-6xl mx-auto">
+                            <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
+                                <div className="md:col-span-2">
+                                    <div className="text-orange-500 font-bold text-xl mb-4">EloquentDB</div>
+                                    <p className="text-gray-400 max-w-md">
+                                        Redefining database architecture for the AI era with innovative solutions that deliver unmatched performance, scalability, and cost savings.
+                                    </p>
+                                    
+                                    <div className="flex space-x-4 mt-6">
+                                        <a href="#" className="text-gray-400 hover:text-orange-500 transition-colors">
+                                            <i className="fa-brands fa-twitter text-xl"></i>
+                                        </a>
+                                        <a href="#" className="text-gray-400 hover:text-orange-500 transition-colors">
+                                            <i className="fa-brands fa-linkedin text-xl"></i>
+                                        </a>
+                                        <a href="#" className="text-gray-400 hover:text-orange-500 transition-colors">
+                                            <i className="fa-brands fa-github text-xl"></i>                                    
+                                        </a>
+                                        <a href="#" className="text-gray-400 hover:text-orange-500 transition-colors">
+                                            <i className="fa-brands fa-youtube text-xl"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                                
+                                <div>
+                                    <h4 className="text-white font-semibold mb-4">Products</h4>
+                                    <ul className="space-y-2">
+                                        <li><a href="#" className="text-gray-400 hover:text-orange-500 transition-colors">Features</a></li>
+                                        <li><a href="#" className="text-gray-400 hover:text-orange-500 transition-colors">Pricing</a></li>
+                                        <li><a href="#" className="text-gray-400 hover:text-orange-500 transition-colors">Documentation</a></li>
+                                        <li><a href="#" className="text-gray-400 hover:text-orange-500 transition-colors">Updates</a></li>
+                                    </ul>
+                                </div>
+                                
+                                <div>
+                                    <h4 className="text-white font-semibold mb-4">Company</h4>
+                                    <ul className="space-y-2">
+                                        <li><a href="#" className="text-gray-400 hover:text-orange-500 transition-colors">About Us</a></li>
+                                        <li><a href="#" className="text-gray-400 hover:text-orange-500 transition-colors">Careers</a></li>
+                                        <li><a href="#" className="text-gray-400 hover:text-orange-500 transition-colors">Blog</a></li>
+                                        <li><a href="#" className="text-gray-400 hover:text-orange-500 transition-colors">Contact</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            
+                            <div className="border-t border-gray-800 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center">
+                                <p className="text-gray-500 text-sm">
+                                    © 2025 EloquentDB. All rights reserved.
+                                </p>
+                                
+                                <div className="flex space-x-6 mt-4 md:mt-0">
+                                    <a href="#" className="text-gray-500 hover:text-gray-300 text-sm">Privacy Policy</a>
+                                    <a href="#" className="text-gray-500 hover:text-gray-300 text-sm">Terms of Service</a>
+                                    <a href="#" className="text-gray-500 hover:text-gray-300 text-sm">Cookies</a>
+                                </div>
+                            </div>
+                        </div>
                     </div>   
                 </footer>
             );
@@ -266,7 +363,6 @@
                     <TechnologySection />
                     <MissionSection />
                     <JoinUsSection />
-                    <OfficeLocations />
                     <Footer />
                 </div>
             );
@@ -274,6 +370,20 @@
         
         // Render the app
         ReactDOM.render(<App />, document.getElementById('root'));
+        
+        // Add scroll event listener for header
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (window.scrollY > 50) {
+                header.classList.add('py-2');
+                header.classList.remove('py-4');
+                header.classList.add('shadow-lg');
+            } else {
+                header.classList.add('py-4');
+                header.classList.remove('py-2');
+                header.classList.remove('shadow-lg');
+            }
+        });
     </script>
 </body>
 </html>
