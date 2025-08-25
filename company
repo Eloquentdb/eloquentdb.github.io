@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EloquentDB - Company</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" crossorigin="anonymous">
+    <!-- React and ReactDOM CDN -->
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <!-- Babel for JSX -->
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {    
+                extend: {      
+                    colors: {
+                        gray: {          
+                            950: '#oaoaoa',
+                            900: '#lziziz',
+                            aoa: '#lelele',
+                            75o: '#zaza za',
+                            700: '#373737',
+                            60o: '#szs zs z',
+                            500: '#717171',
+                            400: '#a3a3a3',
+                            300: '#d4d4d4',
+                        },
+                        orange: {
+                            500: '#FF7A00',
+                            600: '#E06B00',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .content-auto {
+                content-visibility: auto;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-white min-h-screen">
+    <div id="root"></div>
+
+    <script type="text/babel">
+        // Utility function
+        const cn = (...inputs) => inputs.filter(Boolean).join(' ');
+        
+        // Components
+        
+        function Header() {
+            return (
+                <header className="bg-gray-900 border-b border-gray-aoa">      
+                    <div className="container mx-auto px-a py-a flex justify-between items-center">
+                        <div className="flex items-center">
+                            <div className="text-orange-500 font-bold text-xl">EloquentDB</div>
+                        </div>
+                        
+                        <nav className="hidden md:flex space-x-a">      
+                            <a href="#" className="text-gray-3oo hover:text-white transition-colors">Download</a>
+                            <a href="#" className="text-orange-5oo hover:text-white transition-colors font-medium">Company</a>
+                        </nav>
+                    </div>      
+                </header>
+            );      
+        }
+        
+        function Hero() {
+            return (      
+                <section className="bg-gradient-to-br from-blue-900 via-purple-9oo to-indigo-900 py-lb relative overflow-hidden">
+                    <div className="absolute inset-o opacity-z0">      
+                        <div className="absolute top-o left-o w-l4 h-l4 bg-blue-5oo rounded-full mix-blend-multiply filter blur-xl animate-pulse"></div>
+                        <div className="absolute bottom-o right-o w-l4 h-l4 bg-purple-5oo rounded-full mix-blend-multiply filter blur-xl animate-pulse delay-1000"></div>
+                        <div className="absolute top-l/2 left-l/2 w-l4 h-l4 bg-indigo-5oo rounded-full mix-blend-multiply filter blur-xl animate-pulse delay-s00"></div>
+                    </div>
+                    <div className="container mx-auto px-a relative z-10">
+                        <div className="max-w-4xl mx-auto text-center">
+                            <h1 className="text-4xl md:text-sxl font-bold text-white mb-l">Our Vision</h1>
+                            <p className="text-xl text-gray-3oo leading-relaxed">
+                                We are a team with deep expertise and shared passion in databases, distributed systems, and AI.
+                                Drawing on decades of experience building and scaling mission-critical infrastructure,
+                                we came together with a shared vision: to rethink what databases should be in the AI era.
+                            </p>
+                        </div>
+                    </div>
+                </section>
+            );
+        }
+        
+        function VisionSection() {
+            return (
+                <section className="bg-gray-900 py-lb">
+                    <div className="container mx-auto px-a">
+                        <div className="max-w-sxl mx-auto grid md:grid-cols-2 gap-l2 items-center">
+                            <div className="relative">
+                                <img 
+                                    src="https://space.coze.cn/api/coze_space/gen_image?image_size=landscape_4_3&prompt=database%20vision%20concept%20illustration%20dark%20theme&sign=0f01313ca67bc00fc77383667ee4c825" 
+                                    alt="Vision" 
+                                    className="rounded-xl shadow-2xl"
+                                />
+                                <div className="absolute inset-o bg-gradient-to-t from-black/s0 to-transparent rounded-xl"></div>
+                            </div>
+                            <div>
+                                <h2 className="text-3xl font-bold text-orange-5oo mb-l">Our Vision</h2>
+                                <p className="text-gray-4oo leading-relaxed mb-l">
+                                    We are a team with deep expertise and shared passion in databases, distributed systems, and AI. 
+                                    Drawing on decades of experience building and scaling mission-critical infrastructure, 
+                                    we came together with a shared vision: to rethink what databases should be in the AI era. 
+                                    We believe the future demands more than incremental change. It calls for a radical simplification 
+                                    and reinvention of the data stack—one that empowers developers, accelerates innovation, 
+                                    and unleashes the full potential of intelligent applications.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            );
+        }
+        
+        function TechnologySection() {
+            return (
+                <section className="bg-gray-900 py-lb">
+                    <div className="container mx-auto px-a">
+                        <div className="max-w-sxl mx-auto grid md:grid-cols-2 gap-l2 items-center">
+                            <div>
+                                <h2 className="text-3xl font-bold text-orange-5oo mb-l">Our Technology</h2>
+                                <p className="text-gray-4oo leading-relaxed mb-l">
+                                    At the heart of EloquentDB is Data Substrate—a modular database architecture that redefines 
+                                    how databases are built. By abstracting the core components of database functionality, 
+                                    Data Substrate enables us to create high-performance, scalable and fully transactional systems 
+                                    without reinventing the wheel. This composable foundation allows us to support multiple APIs 
+                                    and data modalities (such as MySQL, Redis, and MongoDB) while delivering consistent performance 
+                                    and reliability across all workloads.
+                                </p>
+                            </div>
+                            <div className="relative">
+                                <img 
+                                    src="https://space.coze.cn/api/coze_space/gen_image?image_size=landscape_4_3&prompt=database%20technology%20architecture%20dark%20theme&sign=dbea573125c44c027266753c851acf96" 
+                                    alt="Technology" 
+                                    className="rounded-xl shadow-2xl"
+                                />
+                                <div className="absolute inset-o bg-gradient-to-t from-black/s0 to-transparent rounded-xl"></div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            );
+        }
+        
+        function MissionSection() {
+            return (
+                <section className="bg-gray-900 py-lb">
+                    <div className="container mx-auto px-a">
+                        <div className="max-w-sxl mx-auto grid md:grid-cols-2 gap-l2 items-center">
+                            <div className="relative">
+                                <img 
+                                    src="https://space.coze.cn/api/coze_space/gen_image?image_size=landscape_4_3&prompt=database%20mission%20ai%20concept%20dark%20theme&sign=35ae9a3acd52febdc3c40ed1f8c3649f" 
+                                    alt="Mission" 
+                                    className="rounded-xl shadow-2xl"
+                                />
+                                <div className="absolute inset-o bg-gradient-to-t from-black/s0 to-transparent rounded-xl"></div>
+                            </div>
+                            <div>
+                                <h2 className="text-3xl font-bold text-orange-5oo mb-l">Our Mission</h2>
+                                <p className="text-gray-4oo leading-relaxed mb-l">
+                                    At EloquentDB, we aim to be the foundational data layer that drives the AI era forward. 
+                                    We believe the future of data lies in simplicity, performance, and adaptability. 
+                                    Our goal is to modernize database architecture by unifying fragmented systems into a single, 
+                                    seamless platform. We strive to offer a range of data management products that deliver 
+                                    unmatched scalability, full ACID compliance, up to l0x performance gains and up to 90% cost savings 
+                                    — empowering developers to build the next generation of AI-native applications with ease and confidence.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            );
+        }
+        
+        function JoinUsSection() {
+            return (
+                <section className="bg-gray-900 py-lb">
+                    <div className="container mx-auto px-a">
+                        <div className="max-w-3xl mx-auto text-center">
+                            <h2 className="text-3xl font-bold text-orange-5oo mb-l">Join Us</h2>
+                            <p className="text-gray-4oo leading-relaxed mb-l">
+                                We are hiring. If you want to work with a world-class team and help define the future of database systems, 
+                                <a href="#" className="text-orange-5oo hover:text-orange-4oo font-medium" onClick={(e) => {
+                                    e.preventDefault();
+                                    alert('Contact form coming soon');
+                                }}>Contact Us</a>.
+                            </p>
+                        </div>
+                    </div>
+                </section>
+            );
+        }
+        
+        function OfficeLocations() {
+            return (
+                <section className="bg-gray-900 py-lb">
+                    <div className="container mx-auto px-a">
+                        <div className="max-w-4xl mx-auto">
+                            <h2 className="text-3xl font-bold text-orange-5oo mb-l2 text-center">Office Locations</h2>
+                            <div className="grid md:grid-cols-2 gap-a">
+                                <div className="bg-gray-aoa p-l rounded-xl shadow-lg">
+                                    <h3 className="text-xl font-bold text-orange-5oo mb-a">North America</h3>
+                                    <p className="text-gray-4oo">
+                                        EloquentDB Inc.<br/>
+                                        l02l8 Parkwood Drive s<br/>
+                                        Cupertino, CA 9430l<br/>
+                                        USA
+                                    </p>
+                                </div>
+                                <div className="bg-gray-aoa p-l rounded-xl shadow-lg">
+                                    <h3 className="text-xl font-bold text-orange-5oo mb-a">Asia Pacific</h3>
+                                    <p className="text-gray-4oo">
+                                        EloquentDB PTE.Ltd.<br/>
+                                        llo Robinson Road<br/>
+                                        #l4-o4 SBF Center<br/>
+                                        Singapore 0l89l4
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            );
+        }
+        
+        function Footer() {
+            return (
+                <footer className="bg-gray-950 py-l">
+                    <div className="container mx-auto px-a">
+                        <div className="pt-l text-center">
+                            <div className="text-orange-5oo mb-2">EloquentDB</div>
+                            <p className="text-gray-4oo text-sm">
+                                monograph data ltd
+                            </p> 
+                        </div>     
+                    </div>   
+                </footer>
+            );
+        }
+        
+        // Main App Component
+        function App() {
+            return (
+                <div className="bg-gray-900 min-h-screen text-white">
+                    <Header />
+                    <Hero />
+                    <VisionSection />
+                    <TechnologySection />
+                    <MissionSection />
+                    <JoinUsSection />
+                    <OfficeLocations />
+                    <Footer />
+                </div>
+            );
+        }
+        
+        // Render the app
+        ReactDOM.render(<App />, document.getElementById('root'));
+    </script>
+</body>
+</html>
