@@ -38,6 +38,16 @@
                     fontFamily: {
                         sans: ['Inter', 'system-ui', 'sans-serif'],
                     },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-10px)' },
+                        }
+                    }
                 }
             }
         }
@@ -48,10 +58,21 @@
             .content-auto {
                 content-visibility: auto;
             }
+            .text-gradient {
+                background-clip: text;
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+            }
+            .bg-grid {
+                background-size: 40px 40px;
+                background-image: 
+                    linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+                    linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+            }
         }
     </style>
 </head>
-<body class="bg-gray-900 text-white min-h-screen">
+<body class="bg-gray-900 text-white min-h-screen scroll-smooth">
     <div id="root"></div>
 
     <script type="text/babel">
@@ -61,16 +82,23 @@
         // Components
         function Header() {
             return (
-                <header className="bg-gray-900 border-b border-gray-800">
+                <header className="bg-gray-900/80 backdrop-blur-md border-b border-gray-800 sticky top-0 z-50 transition-all duration-300">      
                     <div className="container mx-auto px-4 py-4 flex justify-between items-center">
                         <div className="flex items-center">
-                            <div className="text-orange-500 font-bold text-xl">EloquentDB</div>
+                            <a href="index.html" className="text-orange-500 font-bold text-xl hover:text-orange-400 transition-colors flex items-center gap-2 group">
+                                EloquentDB
+                                <span className="h-1 w-0 bg-orange-500 group-hover:w-8 transition-all duration-300"></span>
+                            </a>
                         </div>
                         
-                        <nav className="hidden md:flex space-x-8">
-                            <a href="company.html" className="text-gray-300 hover:text-white transition-colors">Company</a>
+                        <nav className="hidden md:flex space-x-8">      
+                            <a href="company.html" className="text-gray-300 hover:text-white transition-colors relative after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 after:bg-orange-500 hover:after:w-full after:transition-all duration-300">Company</a>
                         </nav>
-                    </div>
+                        
+                        <button className="md:hidden text-gray-300 hover:text-white">
+                            <i className="fa-solid fa-bars text-xl"></i>
+                        </button>
+                    </div>      
                 </header>
             );
         }
@@ -91,29 +119,44 @@
             };
             
             return (
-                <section className="bg-gray-900 py-20">
-                    <div className="container mx-auto px-4 text-center">
-                        <h1 className="text-5xl md:text-6xl font-bold text-orange-500 mb-4">EloquentDB</h1>
-                        <h2 className="text-2xl md:text-3xl text-white mb-6">Redis API, Database Power</h2>
-                        <p className="text-gray-400 max-w-2xl mx-auto mb-10 text-lg">
-                            The Redis-API Compatible Distributed Database for Production, High Performance, Cost Effective and Full ACID Transactions
-                        </p>
-                        <div className="flex justify-center">
-                            <button 
-                                onClick={handleDownload}
-                                className="px-8 py-3 bg-orange-500 text-black font-medium rounded-lg hover:bg-orange-600 transition-colors shadow-lg shadow-orange-500/20 text-lg"
-                            >
-                                Get Started
-                            </button>
+                <section className="bg-gradient-to-br from-blue-900 via-purple-900 to-indigo-900 py-20 relative overflow-hidden bg-grid">
+                    <div className="absolute inset-0 opacity-20">      
+                        <div className="absolute top-0 left-0 w-64 h-64 bg-blue-500 rounded-full mix-blend-multiply filter blur-3xl animate-pulse-slow"></div>
+                        <div className="absolute bottom-0 right-0 w-64 h-64 bg-purple-500 rounded-full mix-blend-multiply filter blur-3xl animate-pulse-slow delay-1000"></div>
+                        <div className="absolute top-1/2 left-1/2 w-64 h-64 bg-indigo-500 rounded-full mix-blend-multiply filter blur-3xl animate-pulse-slow delay-700"></div>
+                    </div>
+                    
+                    <div className="container mx-auto px-4 relative z-10">
+                        <div className="max-w-4xl mx-auto text-center">
+                            <h1 className="text-4xl md:text-5xl font-bold text-white mb-6 leading-tight">
+                                EloquentDB, <span className="bg-gradient-to-r from-orange-400 to-pink-500 text-gradient">Database Power</span>
+                            </h1>
+                            <p className="text-xl text-gray-300 leading-relaxed mb-10 max-w-2xl mx-auto">
+                                The Redis-API Compatible Distributed Database for Production, High Performance, 
+                                Cost Effective and Full ACID Transactions
+                            </p>
+                            <div className="flex flex-col sm:flex-row justify-center gap-4">
+                                <button 
+                                    onClick={handleDownload}
+                                    className="bg-orange-500 hover:bg-orange-600 text-white font-medium py-3 px-8 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-orange-500/20"
+                                >
+                                    Get Started
+                                </button>
+                                <a href="company.html" className="bg-gray-800 hover:bg-gray-750 text-white font-medium py-3 px-8 rounded-xl transition-all duration-300 transform hover:scale-105 border border-gray-700">
+                                    Learn More
+                                </a>
+                            </div>
                         </div>
                     </div>
+                    
+                    <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-gray-900 to-transparent"></div>
                 </section>
             );
         }
         
         function Feature({ title, description, icon, reverse = false }) {
             return (
-                <div className={cn("bg-gray-800 rounded-xl p-6 mb-8 shadow-lg", reverse ? 'flex flex-col md:flex-row-reverse' : 'flex flex-col md:flex-row', 'items-center gap-6')}>
+                <div className={cn("bg-gray-800 rounded-xl p-8 mb-8 shadow-lg border border-gray-700", reverse ? 'flex flex-col md:flex-row-reverse' : 'flex flex-col md:flex-row', 'items-center gap-8')}>
                     <div className="md:w-1/2">
                         <h3 className="text-2xl font-bold text-white mb-4">{title}</h3>
                         <p className="text-gray-400 leading-relaxed">{description}</p>
@@ -127,7 +170,7 @@
             return (
                 <section className="bg-gray-900 py-20">
                     <div className="container mx-auto px-4">
-                        <h2 className="text-3xl font-bold text-orange-500 mb-4 text-center">EloquentDB Features</h2>
+                        <h2 className="text-3xl font-bold text-white mb-4 text-center">EloquentDB Features</h2>
                         <p className="text-gray-400 text-center max-w-2xl mx-auto mb-16">
                             Redis-compatible database built for durability, scalability and performance
                         </p>
@@ -138,7 +181,7 @@
                                 title="Primary Database with Redis API"
                                 description="EloquentDB isn't just a cache—it's a full-fledged transactional key-value database, built for the needs of a traditional database. With durability, persistence, and availability that Redis lacks. By combining persistent high availability and full Redis API compatibility, EloquentDB enables developers to use Redis commands in real database workloads."
                                 icon={
-                                    <div className="bg-gray-900 p-6 rounded-lg">
+                                    <div className="bg-gray-900 p-6 rounded-lg border border-gray-700">
                                         <div className="text-orange-500 text-6xl">
                                             <svg width="100" height="100" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                 <path d="M30 30H70C75.5228 30 80 34.4772 80 40V70C80 75.5228 75.5228 80 70 80H30C24.4772 80 20 75.5228 20 70V40C20 34.4772 24.4772 30 30 30Z" stroke="#FF7A00" strokeWidth="6" strokeLinecap="round" strokeLinejoin="round"/>
@@ -157,7 +200,7 @@
                                 title="Tiered Storage"
                                 description="EloquentDB automatically optimizes hot, warm, and cold data across memory, SSD, and object storage. Hot data stays in memory, warm data transitions to SSD, and rarely accessed data moves to object storage—cutting storage costs without hurting performance."
                                 icon={
-                                    <div className="bg-gray-900 p-6 rounded-lg">
+                                    <div className="bg-gray-900 p-6 rounded-lg border border-gray-700">
                                         <div className="text-orange-500">
                                             <div className="bg-orange-500 text-black font-bold p-3 rounded-t-lg mb-1 text-center">Hot</div>
                                             <div className="bg-orange-500/80 text-black font-bold p-3 mb-1 text-center">Warm</div>
@@ -174,7 +217,7 @@
                                 title="Multi-Threaded Execution"
                                 description="EloquentDB breaks Redis's single-thread limitation and leverages modern multi-core hardware. With a multi-threaded engine, can process millions of QPS on a single machine—unlocking unprecedented vertical scaling."
                                 icon={
-                                    <div className="bg-gray-900 p-6 rounded-lg">
+                                    <div className="bg-gray-900 p-6 rounded-lg border border-gray-700">
                                         <div className="text-orange-500 text-6xl">
                                             <svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                 <circle cx="40" cy="40" r="25" stroke="#FF7A00" strokeWidth="6"/>
@@ -196,7 +239,7 @@
         
         function CodeComparison() {
             return (
-                <section className="bg-gray-900 py-16">
+                <section className="bg-gray-900 py-16 border-t border-gray-800">
                     <div className="container mx-auto px-4">
                         <div className="max-w-5xl mx-auto grid md:grid-cols-2 gap-6">
                             <div className="bg-gray-800 rounded-xl p-6 border-l-4 border-orange-500">
@@ -231,30 +274,30 @@ COMMIT
         
         function DatabaseComparison() {
             return (
-                <section className="bg-gray-900 py-16">
+                <section className="bg-gray-900 py-16 border-t border-gray-800">
                     <div className="container mx-auto px-4">
-                        <h2 className="text-3xl font-bold text-orange-500 mb-4 text-center">Database Comparison</h2>
+                        <h2 className="text-3xl font-bold text-white mb-4 text-center">Database Comparison</h2>
                         <p className="text-gray-400 text-center max-w-2xl mx-auto mb-12">
                             See how EloquentDB compares to Redis, DragonflyDB and Upstash
                         </p>
                         
                         <div className="overflow-x-auto max-w-5xl mx-auto">
-                            <table className="w-full bg-gray-800 rounded-xl">
+                            <table className="w-full bg-gray-800 rounded-xl border border-gray-700">
                                 <thead>
                                     <tr className="bg-gray-900 text-left">
                                         <th className="px-6 py-4 text-gray-300">Features</th>
                                         <th className="px-6 py-4 text-gray-300 text-center">EloquentDB</th>
-                                        <th className="px-6 py-4 text-gray-300 text-center">Redis</th>
+                                        <th className="px极 py-4 text-gray-300 text-center">Redis</th>
                                         <th className="px-6 py-4 text-gray-300 text-center">DragonflyDB</th>
                                         <th className="px-6 py-4 text-gray-300 text-center">Upstash</th>
                                     </tr>
                                 </thead>
                                 <tbody className="divide-y divide-gray-700">
                                     <tr>
-                                        <td className="px-极 py-4 text-gray-300">In-Memory Cache with Redis API</td>
+                                        <td className="px-6 py-4 text-gray-300">In-Memory Cache with Redis API</td>
                                         <td className="px-6 py-4 text-center"><div className="w-3 h-3 bg-green-500 rounded-full mx-auto"></div></td>
+                                        <td className="px-6 py-4极text-center"><div className="w-3 h-3 bg-green-500 rounded-full mx-auto"></div></td>
                                         <td className="px-6 py-4 text-center"><div className="w-3 h-3 bg-green-500 rounded-full mx-auto"></div></td>
-                                        <td className="px-6 py-4 text-center"><div className="w-3 h-3 bg-green-500 rounded-full极auto"></div></td>
                                         <td className="px-6 py-4 text-center"><div className="w-3 h-3 bg-green-500 rounded-full mx-auto"></div></td>
                                     </tr>
                                     <tr>
@@ -269,7 +312,7 @@ COMMIT
                                         <td className="px-6 py-4 text-center"><div className="w-3 h-3 bg-green-500 rounded-full mx-auto"></div></td>
                                         <td className="px-6 py-4 text-center"><div className="w-3 h-3 bg-gray-600 rounded-full mx-auto"></div></td>
                                         <td className="px-6 py-4 text-center"><div className="w-3 h-3 bg-gray-600 rounded-full mx-auto"></div></td>
-                                        <td className="px-6 py-4 text-center"><div className="w-3 h-3 bg-gray-600 rounded-full mx-auto"></div></td>
+                                        <td className="px-6 py-4 text-center"><div className="w-3 h-3 bg-gray-极 rounded-full mx-auto"></div></td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -281,14 +324,65 @@ COMMIT
         
         function Footer() {
             return (
-                <footer className="bg-gray-950 py-6">
+                <footer className="bg-gray-950 py-12 border-t border-gray-900">
                     <div className="container mx-auto px-4">
-                        <div className="pt-6 text-center">
-                            <div className="text-orange-500 mb-2">EloquentDB</div>
-                            <p className="text-gray-400 text-sm">
-                                monograph data ltd
-                            </p> 
-                        </div>     
+                        <div className="max-w-6xl mx-auto">
+                            <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
+                                <div className="md:col-span-2">
+                                    <div className="text-orange-500 font-bold text-xl mb-4">EloquentDB</div>
+                                    <p className="text-gray-400 max-w-md">
+                                        Redefining database architecture for the AI era with innovative solutions that deliver unmatched performance, scalability, and cost savings.
+                                    </p>
+                                    
+                                    <div className="flex space-x-4 mt-6">
+                                        <a href="#" className="text-gray-400 hover:text-orange-500 transition-colors">
+                                            <i className="fa-brands fa-twitter text-xl"></i>
+                                        </a>
+                                        <a href="#" className="text-gray-400 hover:text-orange-500 transition-colors">
+                                            <i className="fa-brands fa-linkedin text-xl"></i>
+                                        </a>
+                                        <a href="#" className="text-gray-400 hover:text-orange-500 transition-colors">
+                                            <i className="fa-brands fa-github text-xl"></i>                                    
+                                        </a>
+                                        <a href="#" className="text-gray-400 hover:text-orange-500 transition-colors">
+                                            <i className="fa-brands fa-youtube text-xl"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                                
+                                <div>
+                                    <h4 className="text-white font-semib极 mb-4">Products</h4>
+                                    <ul className="space-y-2">
+                                        <li><a href="#" className="text-gray-400 hover:text-orange-500 transition-colors">Features</a></li>
+                                        <li><a href="#" className="text-gray-400 hover:text-orange-500 transition-colors">Pricing</a></li>
+                                        <li><a href="#" className="text-gray-400 hover:text-orange-500 transition-colors">Documentation</a></li>
+                                        <li><a href="#" className="text-gray-400 hover:text-orange-500 transition-colors">Updates</a></li>
+                                    </ul>
+                                </div>
+                                
+                                <div>
+                                    <h4 className="text-white font-semibold mb-4">Company</h4>
+                                    <ul className="space-y-2">
+                                        <li><a href="company.html" className="text-gray-400 hover:text-orange-500 transition-colors">About Us</a></li>
+                                        <li><a href="#" className="text-gray-400 hover:text-orange-500 transition-colors">Careers</a></li>
+                                        <li><a href="#" className="text-gray-400 hover:text-orange-500 transition-colors">Blog</a></li>
+                                        <li><a href="mailto:eloquentdb@outlook.com" className="text-gray-400 hover:text-orange-500 transition-colors">Contact</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            
+                            <div className="border-t border-gray-800 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center">
+                                <p className="text-gray-500 text-sm">
+                                    © 2025 EloquentDB. All rights reserved.
+                                </p>
+                                
+                                <div className="flex space-x-6 mt-4 md:mt-0">
+                                    <a href="#" className="text-gray-500 hover:text-gray-300 text-sm">Privacy Policy</a>
+                                    <a href="#" className="text-gray-500 hover:text-gray-300 text极">Terms of Service</a>
+                                    <a href="#" className="text-gray-500 hover:text-gray-300 text-sm">Cookies</a>
+                                </div>
+                            </div>
+                        </div>
                     </div>   
                 </footer>
             );
@@ -310,6 +404,20 @@ COMMIT
         
         // Render the app
         ReactDOM.render(<App />, document.getElementById('root'));
+        
+        // Add scroll event listener for header
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (window.scrollY > 50) {
+                header.classList.add('py-2');
+                header.classList.remove('py-4');
+                header.classList.add('shadow-lg');
+            } else {
+                header.classList.add('py-4');
+                header.classList.remove('py-2');
+                header.classList.remove('shadow-lg');
+            }
+        });
     </script>
 </body>
 </html>
